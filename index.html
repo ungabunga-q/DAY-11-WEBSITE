@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<script src="https://cdn.tailwindcss.com"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAY 11 BYLAWS 68-84</title>
+    <title>DAY 11 BYLAWS 68-84 - Interactive Guide</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,378 +11,342 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.js"></script>
     
     <!-- Custom Styles & Font Configuration -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            background-color: #f1f5f9; /* slate-100 */
         }
-        .carousel-item {
-            transition: opacity 0.5s ease-in-out;
-            position: absolute;
-            width: 100%;
-            opacity: 0;
-            visibility: hidden;
+        /* Style for the active tab */
+        .tab-active {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #0f172a; /* slate-900 */
+            font-weight: 600;
         }
-        .carousel-item.active {
-            opacity: 1;
-            visibility: visible;
-            position: relative;
-        }
-        /* Style for FAQ accordions */
-        details > summary {
-            list-style: none;
-        }
-        details > summary::-webkit-details-marker {
+        /* Hide all tab content by default */
+        .tab-content {
             display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s linear;
         }
     </style>
 </head>
 <body class="text-slate-800">
 
+    <div id="progress-bar"></div>
+
     <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-lg md:text-2xl font-bold text-slate-900">
-                DAY 11 BYLAWS 68-84
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-800 text-white p-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-marked"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="m14 6-4 4 4 4"/></svg>
+                </div>
+                <h1 class="text-xl md:text-2xl font-extrabold text-slate-900">Society Manager's Playbook</h1>
             </div>
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="#introduction" class="text-slate-600 hover:text-blue-600 transition-colors">Home</a>
-                <a href="#groups" class="text-slate-600 hover:text-blue-600 transition-colors">Bylaw Groups</a>
-                <a href="#resources" class="text-slate-600 hover:text-blue-600 transition-colors">Resources</a>
-            </div>
-            <button id="mobile-menu-button" class="md:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+            <a href="#resources" class="hidden md:flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Resources
+            </a>
         </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-            <a href="#introduction" class="block py-2 text-slate-600 hover:text-blue-600">Home</a>
-            <a href="#groups" class="block py-2 text-slate-600 hover:text-blue-600">Bylaw Groups</a>
-            <a href="#resources" class="block py-2 text-slate-600 hover:text-blue-600">Resources</a>
-        </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-4 md:px-6 py-12">
 
         <!-- Introduction Section -->
-        <section id="introduction" class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">A Comprehensive Guide to Housing Society Rules</h1>
-            <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-                Welcome, aspiring society manager! This guide provides a clear, detailed, and user-friendly overview of essential housing society bylaws 68 through 84. Navigate the key areas of society management to build your expertise.
+        <section id="introduction" class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Mastering Bylaws 68 to 84</h2>
+            <p class="text-base text-slate-600 max-w-2xl mx-auto">
+                This interactive guide transforms complex rules into actionable knowledge. Select a category below to dive into the specifics and become a confident, effective society manager.
             </p>
         </section>
 
-        <!-- Carousel Section -->
-        <section id="carousel-section" class="mb-16">
-            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 relative">
-                <h2 class="text-3xl font-bold text-center mb-6 text-slate-900">Key Management Areas</h2>
-                <div id="carousel" class="relative overflow-hidden" style="height: 350px;">
-                    <!-- Carousel Items -->
-                    <div class="carousel-item active" data-index="0">
-                        <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-blue-100 text-blue-600 rounded-full p-4 mb-4">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M240,88H152V16a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8V88H16a8,8,0,0,0-8,8V112a8,8,0,0,0,8,8H104v72a8,8,0,0,0,8,8h32a8,8,0,0,0,8-8V120h88a8,8,0,0,0,8-8V96A8,8,0,0,0,240,88ZM144,24h-1.35L128,40.48,113.35,24H112v64h32ZM232,104H120V96h24a8,8,0,0,0,8-8V21.54l14.65,24.42A8,8,0,0,0,172,48a8,8,0,0,0,8-8V16h44Z"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Maintenance, Bills, and Payments</h3>
-                            <p class="text-slate-600 max-w-md">Understand the division of responsibilities, billing cycles, and procedures for handling payment defaults.</p>
-                        </div>
+        <!-- Main Dashboard Layout -->
+        <div class="flex flex-col md:flex-row gap-8">
+
+            <!-- Left Navigation Tabs -->
+            <aside class="md:w-1/4">
+                <div class="sticky top-24">
+                    <h3 class="font-bold text-slate-500 uppercase tracking-wider text-sm mb-4">Categories</h3>
+                    <div class="flex flex-col gap-2">
+                        <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors tab-active" data-target="content-maintenance">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            Maintenance & Bills
+                        </button>
+                         <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors" data-target="content-business">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            Official Business
+                        </button>
+                        <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors" data-target="content-property">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            Property Use
+                        </button>
+                        <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors" data-target="content-safety">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                            Safety & Audits
+                        </button>
+                        <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors" data-target="content-parking">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><path d="M7 17h10"/><path d="M5.8 17a1 1 0 0 1-.8-1.6l1.5-3 3.5-3H12V7H5.1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>
+                            Parking Rules
+                        </button>
+                         <button class="tab-button flex items-center gap-3 p-3 rounded-lg text-left text-slate-700 hover:bg-slate-200 transition-colors" data-target="content-omitted">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-x-2"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><path d="M14 2v6h6"/><path d="m10 12-4 4"/><path d="m6 12 4 4"/><path d="M3 15h6"/></svg>
+                            Omitted Bylaws
+                        </button>
                     </div>
-                    <div class="carousel-item" data-index="1">
-                         <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-green-100 text-green-600 rounded-full p-4 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M224,48H181.35L152,21.35a16,16,0,0,0-22.62,0L100.65,48H32A16,16,0,0,0,16,64V208a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm-96,40a40,40,0,1,1-40,40A40,40,0,0,1,128,88Zm80,104H48V71.61c.83-2,2.3-3.86,4.32-5.13L81,48h32.42l9.83-9.83a.13.13,0,0,0,.1-.1L128,34.34l4.63,3.73.1.1,9.83,9.83H175l28.68,18.48c2,1.27,3.49,3.13,4.32,5.13Z"></path></svg>
+                </div>
+            </aside>
+            
+            <!-- Right Content Area -->
+            <main class="md:w-3/4">
+                <!-- Maintenance Content -->
+                <div id="content-maintenance" class="tab-content active">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Maintenance, Bills, and Payments</h3>
+                        <p class="text-slate-500 mb-6">Bylaws 68 - 70</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                             <div class="bg-blue-50 border-2 border-blue-200 p-4 rounded-lg text-center">
+                                <p class="text-xs font-bold text-blue-800 uppercase">Max Interest Rate</p>
+                                <p class="text-3xl font-extrabold text-blue-900">21%</p>
+                                <p class="text-xs text-blue-700">Simple Interest p.a.</p>
                             </div>
-                            <h3 class="text-2xl font-bold mb-2">Official Society Business & Legal Status</h3>
-                            <p class="text-slate-600 max-w-md">Learn about the society's legal identity, official communications, and the use of the common seal.</p>
+                            <div class="bg-amber-50 border-2 border-amber-200 p-4 rounded-lg text-center">
+                                <p class="text-xs font-bold text-amber-800 uppercase">Defaulter Status</p>
+                                <p class="text-3xl font-extrabold text-amber-900">3+</p>
+                                <p class="text-xs text-amber-700">Months Overdue</p>
+                            </div>
+                             <div class="bg-green-50 border-2 border-green-200 p-4 rounded-lg text-center">
+                                <p class="text-xs font-bold text-green-800 uppercase">Key Prerequisite</p>
+                                <p class="text-2xl font-extrabold text-green-900">AGM Vote</p>
+                                <p class="text-xs text-green-700">Required for Interest</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="carousel-item" data-index="2">
-                         <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-purple-100 text-purple-600 rounded-full p-4 mb-4">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM94.69,168H72V112h22.69a28,28,0,0,1,0,56Zm48,0h-24V88h24Zm48.31,0H168V112h22.69a28,28,0,0,1,0,56Z"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Rules for Using Your Property</h3>
-                            <p class="text-slate-600 max-w-md">Discover the regulations on property usage, including restrictions and penalties for unauthorized changes.</p>
+
+                        <div class="space-y-4">
+                             <details class="bg-slate-50 p-4 rounded-lg" open>
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 68 & 68A: Scope of Maintenance</summary>
+                                <p class="mt-2 text-slate-600"><b>Society's Duty (68):</b> Maintain all common areas — external structure, terrace, water systems, lifts, staircases, gardens, etc. <br><b>Member's Duty (68A):</b> Maintain everything inside their own flat. Crucially, members must cooperate on inter-flat issues like leaks.</p>
+                             </details>
+                             <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 69 & 70: Billing and Default</summary>
+                                <p class="mt-2 text-slate-600"><b>Billing (69):</b> Secretary must ensure timely bill dispatch. Members are responsible for timely payment. <br><b>Default (70):</b> Unpaid dues can attract interest (max 21%) *only if* passed in the AGM. After 3 months, a member is a defaulter, and the MC can begin the recovery process (notices, then legal action under Sec 154B-29).</p>
+                             </details>
                         </div>
-                    </div>
-                    <div class="carousel-item" data-index="3">
-                        <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-yellow-100 text-yellow-600 rounded-full p-4 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M226.83,205.17l-80-160a16,16,0,0,0-29.66,0l-80,160A16,16,0,0,0,48,224H208a16,16,0,0,0,14.83-18.83ZM128,144a12,12,0,1,1,12-12A12,12,0,0,1,128,144Zm0-40a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v12A12,12,0,0,1,128,104Z"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Building Safety & Mandatory Check-ups</h3>
-                            <p class="text-slate-600 max-w-md">Stay informed about crucial safety audits for the structure, fire systems, and lifts to ensure resident well-being.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item" data-index="4">
-                        <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-red-100 text-red-600 rounded-full p-4 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M213.38,133.32,192,102.83V48a8,8,0,0,0-8-8H72a8,8,0,0,0-8,8v54.83L42.62,133.32A24,24,0,0,0,40,147.88V200a16,16,0,0,0,16,16H88a16,16,0,0,0,16-16v-8h48v8a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V147.88A24,24,0,0,0,213.38,133.32ZM80,56H176V98.17l24.42,35.17a8,8,0,0,1,.1,9.08L192,152H64L54.48,138.42a8,8,0,0,1,.1-9.08L79.9,98.3Zm120,136H168v-8a16,16,0,0,0-16-16H104a16,16,0,0,0-16,16v8H56V148.12l4-5.71H196l4,5.71Z"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Parking Rules</h3>
-                            <p class="text-slate-600 max-w-md">Navigate the complexities of parking allotment, usage rules, charges, and policies for different vehicle types.</p>
-                        </div>
-                    </div>
-                     <div class="carousel-item" data-index="5">
-                        <div class="flex flex-col items-center justify-center h-full text-center">
-                            <div class="bg-gray-100 text-gray-600 rounded-full p-4 mb-4">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24a104,104,0,1,0,104,104A104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm24,28a12,12,0,1,1-12-12A12,12,0,0,1,144,164Z"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Omitted / Not Applicable Bylaws</h3>
-                            <p class="text-slate-600 max-w-md">Understand which bylaws are typically not applicable to standard housing societies and why.</p>
+
+                        <div class="mt-8 border-t pt-6">
+                            <h4 class="text-lg font-bold mb-3">Manager's Pro-Tips</h4>
+                             <ul class="space-y-2 list-disc list-inside text-slate-700">
+                                <li>Always get the interest rate resolution passed in the first AGM of the financial year. No resolution = no legal right to charge interest.</li>
+                                <li>Document everything: Keep records of bill dispatch, payment receipts, and all reminder notices sent to defaulters.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <!-- Carousel Controls -->
-                <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 transition-colors z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white rounded-full p-2 transition-colors z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                </button>
-            </div>
-        </section>
 
-        <!-- Bylaw Groups Section -->
-        <section id="groups">
-            <div class="space-y-12">
-                
-                <!-- Group A: Maintenance -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                    <h3 class="text-3xl font-bold mb-6 text-slate-900">Group A: Maintenance, Bills, and Payments</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Bylaw Summary</h4>
-                            <ul class="space-y-4 list-disc list-inside text-slate-600">
-                                <li><strong>Bylaw 68:</strong> Society maintains all common areas (structure, water systems, lights, amenities).</li>
-                                <li><strong>Bylaw 68A:</strong> Members must maintain everything inside their own flats.</li>
-                                <li><strong>Bylaw 69:</strong> Secretary dispatches bills; members must pay on time.</li>
-                                <li><strong>Bylaw 70:</strong> Society can charge up to 21% p.a. interest on late payments. Defaulters (over 3 months due) face a recovery process after notices.</li>
+                <!-- Business Content -->
+                <div id="content-business" class="tab-content">
+                     <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Official Society Business</h3>
+                        <p class="text-slate-500 mb-6">Bylaws 71 - 73</p>
+                        
+                        <div class="space-y-4">
+                             <details class="bg-slate-50 p-4 rounded-lg" open>
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 71: Body Corporate</summary>
+                                <p class="mt-2 text-slate-600">Upon registration, the society becomes a legal entity. This is critical: all contracts (security, housekeeping, AMC) must be in the society's name, not an individual office bearer's name. This protects individuals from personal liability.</p>
+                             </details>
+                             <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 73: The Common Seal</summary>
+                                <p class="mt-2 text-slate-600">This is the society's official stamp of authority, kept securely by the Secretary. It's used on highly important documents like Share Certificates and the Deed of Conveyance. Its use requires a committee resolution and must be co-signed by the Chairman, Secretary, and an authorized member.</p>
+                             </details>
+                        </div>
+                         <div class="mt-8 border-t pt-6">
+                            <h4 class="text-lg font-bold mb-3">Manager's Pro-Tips</h4>
+                             <ul class="space-y-2 list-disc list-inside text-slate-700">
+                                <li>Never sign a vendor contract in your personal name, even if you are the Chairman or Secretary. Always use the society's full registered name.</li>
+                                <li>Maintain a "Seal Register" to log every instance the Common Seal is used, including the date, document details, and authorizing resolution number.</li>
                             </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Manager's Checklist</h4>
-                            <div class="space-y-2 text-slate-700">
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Ensure AGM resolution for interest rate is passed.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Dispatch bills by the fixed date every month.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Present defaulter list at every MC meeting.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Follow the documented notice procedure for defaulters.</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <details class="bg-slate-50 p-4 rounded-lg">
-                            <summary class="font-semibold cursor-pointer flex justify-between items-center">
-                                <span>FAQ: What if a member refuses to cooperate on an internal leak affecting others?</span>
-                                <span class="text-blue-600">+</span>
-                            </summary>
-                            <p class="mt-2 text-slate-600">The society should first mediate. If the member remains uncooperative, the committee can send a formal letter outlining their responsibility under Bylaw 68A and warning of potential liability for damages.</p>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- Group B: Official Business -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                    <h3 class="text-3xl font-bold mb-6 text-slate-900">Group B: Official Society Business & Legal Status</h3>
-                     <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Bylaw Summary</h4>
-                            <ul class="space-y-4 list-disc list-inside text-slate-600">
-                                <li><strong>Bylaw 71:</strong> The society is a 'Body Corporate', a legal entity that can sign contracts.</li>
-                                <li><strong>Bylaw 73:</strong> The official Common Seal is kept by the Secretary and used on major documents like Share Certificates, authenticated by office bearers.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Manager's Checklist</h4>
-                            <div class="space-y-2 text-slate-700">
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Ensure all vendor contracts are in the society's name.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Keep the Common Seal in a secure locker.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Document every use of the Common Seal in meeting minutes.</label>
-                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Group C: Property Use -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                     <h3 class="text-3xl font-bold mb-6 text-slate-900">Group C: Rules for Using Your Property</h3>
-                     <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Bylaw Summary</h4>
-                            <ul class="space-y-4 list-disc list-inside text-slate-600">
-                                <li><strong>Bylaw 75:</strong> Members must use their flat for the purpose specified (e.g., residential). Prior written permission from the MC is required for any change of use.</li>
-                                <li><strong>Penalty:</strong> Unauthorized change of use can lead to a penalty of 5x the monthly maintenance charge.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Manager's Checklist</h4>
-                            <div class="space-y-2 text-slate-700">
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Maintain a record of all change-of-use permissions.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Periodically check for unauthorized commercial activities.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Issue a notice before imposing any penalty.</label>
+                 <!-- Property Use Content -->
+                <div id="content-property" class="tab-content">
+                     <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Rules for Using Your Property</h3>
+                        <p class="text-slate-500 mb-6">Bylaw 75</p>
+                        
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                             <div class="bg-purple-50 border-2 border-purple-200 p-4 rounded-lg text-center">
+                                <p class="text-xs font-bold text-purple-800 uppercase">Requirement</p>
+                                <p class="text-2xl font-extrabold text-purple-900">Prior Consent</p>
+                                <p class="text-xs text-purple-700">Written permission from MC</p>
                             </div>
+                            <div class="bg-red-50 border-2 border-red-200 p-4 rounded-lg text-center">
+                                <p class="text-xs font-bold text-red-800 uppercase">Penalty for Violation</p>
+                                <p class="text-3xl font-extrabold text-red-900">5x</p>
+                                <p class="text-xs text-red-700">The monthly maintenance charge</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                             <details class="bg-slate-50 p-4 rounded-lg" open>
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 75: Change of Use</summary>
+                                <p class="mt-2 text-slate-600">A unit must be used strictly for its intended purpose (e.g., residential for residential flats). Any change, like starting a business, crèche, or extensive tuition classes, requires explicit, prior written permission from the Managing Committee. Verbal approvals are not valid.</p>
+                             </details>
                         </div>
                     </div>
                 </div>
 
-                <!-- Group D: Building Safety -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                    <h3 class="text-3xl font-bold mb-6 text-slate-900">Group D: Building Safety & Mandatory Check-ups</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Bylaw Summary</h4>
-                            <ul class="space-y-4 list-disc list-inside text-slate-600">
-                                <li><strong>Bylaw 76 (Structural Audit):</strong> Every 5 years for buildings 15-30 years old; every 3 years for buildings over 30. Must be done by a panel-approved engineer.</li>
-                                <li><strong>Bylaw 77B (Fire Audit):</strong> Mandatory check of all fire systems every 6 months. Form B report must be submitted to the Fire Brigade.</li>
-                                <li><strong>Bylaw 76D/77B (Lift Inspection):</strong> Annual inspection by the government's Lift Inspector. *(Note: Bylaw number may vary, but the annual requirement is key).*</li>
-                            </ul>
+                <!-- Safety Content -->
+                <div id="content-safety" class="tab-content">
+                     <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Safety & Mandatory Audits</h3>
+                        <p class="text-slate-500 mb-6">Bylaws 76 & 77</p>
+
+                        <div class="space-y-4">
+                             <details class="bg-slate-50 p-4 rounded-lg" open>
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 76: Structural Audit</summary>
+                                <p class="mt-2 text-slate-600">This is a mandatory health check-up for the building's structure. <br>• <b>Frequency (15-30 yrs old):</b> Every 5 years. <br>• <b>Frequency (>30 yrs old):</b> Every 3 years. <br>It must be conducted by an engineer from the official panel of the local Municipal Corporation.</p>
+                             </details>
+                              <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 77B: Fire Audit</summary>
+                                <p class="mt-2 text-slate-600">This is a non-negotiable safety requirement. <br>• <b>Frequency:</b> Every 6 months. <br>• <b>Action:</b> Submit Form B report to the Fire Brigade. Keep acknowledgement receipts on file. <br>• <b>Manager's Role:</b> Ensure the fire-fighting vendor performs checks and submits the report. Also, ensure common areas (lobbies, staircases) are always clear of obstructions like shoe racks or furniture.</p>
+                             </details>
+                              <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 76D / 77B: Lift Inspection</summary>
+                                <p class="mt-2 text-slate-600"><b>Frequency:</b> Annually. This is conducted by a government Lift Inspector from the PWD. The society must coordinate with their lift AMC vendor to be present during the inspection and must pay the requisite government fees.</p>
+                             </details>
                         </div>
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Manager's Checklist</h4>
-                            <div class="space-y-2 text-slate-700">
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Calendar all audit dates well in advance.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Maintain a file with all audit reports and submission receipts.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Send regular circulars reminding members to keep common areas clear.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Ensure lift AMC vendor is present during official inspections.</label>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="mt-6">
-                        <details class="bg-slate-50 p-4 rounded-lg">
-                            <summary class="font-semibold cursor-pointer flex justify-between items-center">
-                                <span>FAQ: Who is responsible if the society fails a fire audit?</span>
-                                <span class="text-blue-600">+</span>
-                            </summary>
-                            <p class="mt-2 text-slate-600">The entire Managing Committee is held responsible. While a notice to rectify issues is given first, repeated failures can lead to penalties or even cancellation of the Fire NOC, which has serious legal and insurance implications.</p>
-                        </details>
                     </div>
                 </div>
 
-                <!-- Group E: Parking -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                    <h3 class="text-3xl font-bold mb-6 text-slate-900">Group E: The Complete Guide to Parking Rules</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Bylaw Summary</h4>
-                            <ul class="space-y-4 list-disc list-inside text-slate-600">
-                                <li><strong>Bylaw 78-79:</strong> Parking rules are framed by the General Body. Spots must be marked and used only for vehicles.</li>
-                                <li><strong>Bylaw 80:</strong> Eligibility requires vehicle ownership. Generally one spot per member.</li>
-                                <li><strong>Bylaw 81:</strong> If spots are limited, a fair lottery or rotation system must be used annually.</li>
-                                <li><strong>Bylaw 82-84:</strong> Members must apply formally. Charges are mandatory once a spot is allotted. Rules also apply to two-wheelers.</li>
-                            </ul>
+                <!-- Parking Content -->
+                <div id="content-parking" class="tab-content">
+                     <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Parking Rules Explained</h3>
+                        <p class="text-slate-500 mb-6">Bylaws 78 - 84</p>
+
+                        <div class="p-4 bg-amber-50 border-l-4 border-amber-400 mb-6 rounded-r-lg">
+                            <p class="font-bold text-amber-900">Key Distinction</p>
+                            <p class="text-sm text-amber-800">These bylaws apply when the <span class="font-bold">society allots parking</span>. If a builder has sold a parking spot as part of the flat agreement, these rules generally do not override that sale.</p>
                         </div>
-                        <div>
-                            <h4 class="text-xl font-semibold mb-3">Manager's Checklist</h4>
-                            <div class="space-y-2 text-slate-700">
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Maintain an updated list of all vehicle owners and allotted slots.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Ensure the parking allotment process (lottery/rotation) is transparent.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Process all parking applications formally through the committee.</label>
-                                <label class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded text-blue-600 mr-2">Regularly check that parking spots are not being used for storage.</label>
-                            </div>
+
+                        <div class="space-y-4">
+                            <details class="bg-slate-50 p-4 rounded-lg" open>
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 78 & 80: Allotment & Eligibility</summary>
+                                <p class="mt-2 text-slate-600">Allotment is on a 'first come, first serve' basis to members who own a vehicle. Generally, one slot per member. If slots are surplus, they can be allotted for a year to others.</p>
+                            </details>
+                             <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 81: Limited Parking Scenario</summary>
+                                <p class="mt-2 text-slate-600">If there are more cars than parking slots, the society *must* use a fair and transparent method for yearly allotment. The two recommended methods are a <b>Lottery System</b> or a <b>Rotation System</b>.</p>
+                             </details>
+                              <details class="bg-slate-50 p-4 rounded-lg">
+                                <summary class="font-semibold cursor-pointer text-lg">Bylaw 78B, 83, 84: Usage & Charges</summary>
+                                <p class="mt-2 text-slate-600">A society-allotted spot <span class="font-bold">cannot be sold or transferred</span>. If the member sells their flat, the spot returns to the society. The member must pay the monthly parking charges (fixed by AGM) regardless of whether they use the spot. These rules also cover two-wheelers.</p>
+                             </details>
                         </div>
                     </div>
                 </div>
                 
-                <!-- NEW Group F: Omitted Bylaws -->
-                <div class="p-6 md:p-8 bg-white rounded-xl shadow-lg">
-                    <h3 class="text-3xl font-bold mb-6 text-slate-900">Group F: Omitted / Not Applicable Bylaws</h3>
-                    <div class="bg-gray-50 border-l-4 border-gray-400 p-4">
-                        <h4 class="text-xl font-semibold mb-3 text-gray-800">For Your Information</h4>
-                        <p class="text-gray-600">The following bylaws were mentioned in the source material as being either not detailed or not applicable to typical housing societies. It is useful to be aware of them.</p>
-                        <ul class="mt-4 space-y-2 list-disc list-inside text-gray-700">
-                            <li><strong>Bylaw 72 (Service of Notices):</strong> Not detailed in the source lecture.</li>
-                            <li><strong>Bylaw 74, 75(A-D), 77:</strong> Marked as 'not applicable' as they typically pertain to plot-purchase type societies rather than apartment buildings.</li>
-                             <li><strong>Bylaw 77A:</strong> Mentioned, but not detailed in the source lecture.</li>
-                        </ul>
+                 <!-- Omitted Content -->
+                <div id="content-omitted" class="tab-content">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-1">Omitted / Not Applicable Bylaws</h3>
+                        <p class="text-slate-500 mb-6">For complete awareness</p>
+                        
+                        <div class="bg-gray-100 p-6 rounded-lg">
+                            <p class="text-slate-600">The following bylaws were mentioned in the source material as being either not detailed or generally not applicable to modern apartment-style housing societies:</p>
+                            <ul class="mt-4 space-y-2 list-disc list-inside text-gray-700">
+                                <li><strong>Bylaw 72 (Service of Notices):</strong> Not detailed in lecture.</li>
+                                <li><strong>Bylaw 74, 75(A-D), 77:</strong> These typically pertain to societies where members purchase plots of land, not pre-built flats.</li>
+                                <li><strong>Bylaw 77A:</strong> Mentioned, but not detailed in lecture.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-        </section>
 
-        <!-- Resources Section -->
-        <section id="resources" class="mt-16 text-center">
-             <h2 class="text-3xl font-bold text-center mb-6 text-slate-900">Resources & Downloads</h2>
+            </main>
+        </div>
+        
+         <!-- Resources Section -->
+        <section id="resources" class="mt-16 text-center bg-white p-8 rounded-xl shadow-lg">
+             <h2 class="text-3xl font-bold text-center mb-4 text-slate-900">Resources & Downloads</h2>
              <p class="text-slate-600 max-w-2xl mx-auto mb-8">Here are some useful links and documents for society management. (Links are for demonstration).</p>
              <div class="flex flex-wrap justify-center gap-4">
-                 <a href="#" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow">Download Model Bylaws (PDF)</a>
-                 <a href="#" class="bg-slate-200 text-slate-800 font-semibold py-3 px-6 rounded-lg hover:bg-slate-300 transition-colors">Maharashtra Co-operative Societies Act</a>
+                 <a href="#" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-transform hover:scale-105 shadow-md">
+                    Download Model Bylaws (PDF)
+                </a>
+                 <a href="#" class="bg-slate-200 text-slate-800 font-semibold py-3 px-6 rounded-lg hover:bg-slate-300 transition-transform hover:scale-105 shadow-md">
+                    Maharashtra Co-op. Societies Act
+                </a>
              </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white mt-16">
+    <footer class="bg-slate-800 text-white mt-16">
         <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 Society Rules Guide. All Rights Reserved.</p>
-            <p class="text-sm text-slate-400 mt-2">A learning tool for aspiring housing society managers.</p>
+            <p>&copy; 2025 Society Manager's Playbook. All Rights Reserved.</p>
+            <p class="text-sm text-slate-400 mt-2">An interactive learning tool based on Day 11 lecture.</p>
         </div>
     </footer>
 
     <script>
-        // --- Mobile Menu Toggle ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // --- Carousel Logic ---
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        let currentIndex = 0;
-        const totalItems = carouselItems.length;
-
-        function updateCarousel() {
-            carouselItems.forEach((item, index) => {
-                if (index === currentIndex) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
+        // --- Scroll Progress Bar ---
+        const progressBar = document.getElementById('progress-bar');
+        function updateProgressBar() {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            const scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+            progressBar.style.width = `${scrollPercent}%`;
         }
-
-        prevBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-            updateCarousel();
-        });
-
-        nextBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            currentIndex = (currentIndex + 1) % totalItems;
-            updateCarousel();
-        });
+        window.addEventListener('scroll', updateProgressBar);
         
-        // Auto-cycle the carousel
-        let carouselInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalItems;
-            updateCarousel();
-        }, 5000);
-        
-        // --- FAQ Accordion Icon Toggle ---
-        const detailsElements = document.querySelectorAll('details');
-        detailsElements.forEach(details => {
-            details.addEventListener('toggle', event => {
-                const summary = details.querySelector('summary');
-                const icon = summary.querySelector('span');
-                if (details.open) {
-                    icon.textContent = '-';
-                } else {
-                    icon.textContent = '+';
-                }
+        // --- Tab Navigation ---
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                
+                // Update button styles
+                tabButtons.forEach(btn => btn.classList.remove('tab-active'));
+                button.classList.add('tab-active');
+
+                // Update content visibility
+                tabContents.forEach(content => {
+                    if (content.id === targetId) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
             });
         });
-
     </script>
 </body>
 </html>
